@@ -15,7 +15,11 @@ https://opensource.org/licenses/mit-license.php
 CustomHID_::CustomHID_() {}
 
 int CustomHID_::SendReport(const void *data, int len) {
+#if defined(ARDUINO_SEEED_XIAO_M0)
   auto ret = USBDevice.send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
+#else
+  auto ret = USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
+#endif
   return ret;
 }
 
