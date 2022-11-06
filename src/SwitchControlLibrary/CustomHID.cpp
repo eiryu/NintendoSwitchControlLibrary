@@ -6,12 +6,16 @@ https://opensource.org/licenses/mit-license.php
 
 #include "./CustomHID.h"
 
+#ifndef TRANSFER_RELEASE
+#define TRANSFER_RELEASE 0
+#endif
+
 #if defined(USBCON)
 
 CustomHID_::CustomHID_() {}
 
 int CustomHID_::SendReport(const void *data, int len) {
-  auto ret = USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
+  auto ret = USBDevice.send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
   return ret;
 }
 
